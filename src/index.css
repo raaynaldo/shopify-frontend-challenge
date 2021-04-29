@@ -32,4 +32,8 @@
         max-width: 68.75rem;
         @apply w-11/12 mx-auto;
     }
+
+    .btn {
+        @apply px-2.5 py-1 text-sm border-2 border-gray-200 rounded-md;
+    }
 }
