@@ -1,8 +1,10 @@
 import axios from 'axios';
 
 const instance = () => {
-    const { REACT_APP_OMDB_API_KEY } = process.env.REACT_APP_OMDB_API_KEY;
-    axios.defaults.baseURL = `http://www.omdbapi.com/?apikey=${REACT_APP_OMDB_API_KEY}&`;
+    const { REACT_APP_OMDB_API_KEY } = process.env;
+    axios.defaults.baseURL = `http://www.omdbapi.com/`;
+    axios.defaults.params = {};
+    axios.defaults.params['apikey'] = REACT_APP_OMDB_API_KEY;
 
     if (false) {
         axios.interceptors.request.use(
