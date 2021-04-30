@@ -2,9 +2,32 @@ import { useState } from 'react';
 import Nominations from 'components/Nominations/Nominations';
 import Results from 'components/Results/Results';
 import Search from 'components/Search/Search';
+import axios from 'axios';
 
 const App = () => {
     const [searchInput, setSearchInput] = useState('');
+    // const [loading, setLoading] = useState('false');
+    const [results, setResults] = useState({ searchInput: '', data: [] });
+    const [nominations, setNominations] = useState([]);
+
+    const fetchData = (event) => {
+        event.preventDefault();
+        axios
+            .get(`?s=${searchInput}`)
+            .then((response) => {
+                setResults({
+                    searchInput: searchInput,
+                    data: response.data.Search,
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+
+    const AddToNominations = (movie) => {
+        setNominations((prevNominations) => [...prevNominations, movie]);
+    };
 
     return (
         <>
@@ -15,10 +38,14 @@ const App = () => {
                 <Search
                     searchInput={searchInput}
                     setSearchInput={setSearchInput}
+                    fetchData={fetchData}
                 />
                 <div className='flex w-3/4 space-x-6'>
-                    <Results />
-                    <Nominations />
+                    <Results
+                        results={results}
+                        AddToNominations={AddToNominations}
+                    />
+                    <Nominations nominations={nominations} />
                 </div>
             </div>
         </>
